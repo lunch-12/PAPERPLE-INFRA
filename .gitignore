@@ -43,3 +43,4 @@ terraform.rc
 *.pem
 *.txt
 *.ini
+variables.tf
