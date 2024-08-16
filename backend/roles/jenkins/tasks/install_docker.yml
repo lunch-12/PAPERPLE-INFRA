@@ -1,0 +1,12 @@
+---
+- name: install docker.io
+  apt:
+    name: docker.io
+    state: present
+
+- name: change ownership of docker.sock
+  file:
+    path: /var/run/docker.sock
+    owner: jenkins
+    group: jenkins
+    state: touch

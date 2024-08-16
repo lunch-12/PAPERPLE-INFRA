@@ -1,0 +1,5 @@
+# https://medium.com/@sapnarsy2612/setup-jenkins-master-slave-using-ansible-3e71eb4602e0
+# jenkins 서버 세팅
+---
+- include_tasks: install_jenkins.yml
+- include_tasks: install_docker.yml
