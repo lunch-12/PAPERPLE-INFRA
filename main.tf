@@ -1,44 +1,40 @@
-provider "aws" {
-  region = var.aws_region
-}
-
 module "vpc" {
-  source    = "./modules/vpc"
+  source = "./modules/vpc"
 
   public_subnet = module.subnet.public_subnet
 }
 
 module "subnet" {
-  source    = "./modules/subnet"
+  source = "./modules/subnet"
   vpc_id = module.vpc.vpc_id
 }
 
 module "security_group" {
-  source    = "./modules/security_group" 
-  vpc_id    = module.vpc.vpc_id
+  source = "./modules/security_group"
+  vpc_id = module.vpc.vpc_id
 }
 
 module "rds" {
-  source              = "./modules/rds"
-  db_username         = var.db_username
-  db_password         = var.db_password
-  security_group      = module.security_group.database
-  subnet_group_name   = module.subnet.aws_db_subnet_group_name
+  source            = "./modules/rds"
+  db_username       = var.db_username
+  db_password       = var.db_password
+  security_group    = module.security_group.database
+  subnet_group_name = module.subnet.aws_db_subnet_group_name
 }
 
 module "ec2" {
-  source                 = "./modules/ec2"
+  source = "./modules/ec2"
 
   subnet_id              = module.subnet.jenkins_subnet
   vpc_security_group_ids = [module.security_group.main]
 }
 
 module "eks" {
-  source                  = "./modules/eks"
+  source = "./modules/eks"
 
-  vpc_id                          = module.vpc.vpc_id
-  cluster_subnet_ids              = module.subnet.eks_cluster_subnet
-  node_group_subnet_ids           = module.subnet.eks_node_group_subnet
+  vpc_id                = module.vpc.vpc_id
+  cluster_subnet_ids    = module.subnet.eks_cluster_subnet
+  node_group_subnet_ids = module.subnet.eks_node_group_subnet
 }
 
 resource "aws_route_table_association" "jenkins" {

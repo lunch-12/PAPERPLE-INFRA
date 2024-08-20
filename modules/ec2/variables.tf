@@ -1,16 +1,19 @@
 variable "settings" {
-    type = map(any)
-    default = {
-        "type" = "t2.medium"
-        "count" = 1
-        "key_name" = "lunch-key"
-    }
+  type = map(any)
+  default = {
+    "type"     = "t2.medium"
+    "count"    = 1
+    "key_name" = "lunch-key"
+  }
+  description = "Jenkins Server Instance Settings"
 }
 
 variable "subnet_id" {
-    type = string
+  type        = string
+  description = "Jenkins Server Subnet ID"
 }
 
 variable "vpc_security_group_ids" {
-    type = list(string)
+  type        = list(string)
+  description = "VPC Security Group IDs"
 }

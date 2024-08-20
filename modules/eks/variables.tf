@@ -1,16 +1,20 @@
 variable "cluster_name" {
-    type = string
-    default = "paperple-cluster"
+  type        = string
+  default     = "paperple-cluster"
+  description = "EKS Cluster Name"
 }
 
 variable "cluster_subnet_ids" {
-    type = list(string)
+  type        = list(string)
+  description = "EKS Cluster Subnet IDs - public"
 }
 
 variable "node_group_subnet_ids" {
-    type = list(string)
+  type        = list(string)
+  description = "EKS NodeGroup Subnet IDs - private"
 }
 
 variable "vpc_id" {
-    type = string
+  type        = string
+  description = "VPC ID"
 }

@@ -49,9 +49,9 @@ resource "aws_subnet" "eks_cluster_subnet" {
   availability_zone = element(["ap-northeast-2a", "ap-northeast-2c"], count.index)
 
   tags = {
-    Name = "eks_subnet-${count.index + 1}"
-    "kubernetes.io/cluster/${var.cluster_name}"     = "owned"
-    "kubernetes.io/role/internal-elb"               = "1"
+    Name                                        = "eks_subnet-${count.index + 1}"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+    "kubernetes.io/role/internal-elb"           = "1"
   }
 }
 

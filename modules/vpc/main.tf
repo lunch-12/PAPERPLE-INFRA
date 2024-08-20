@@ -1,9 +1,9 @@
 resource "aws_vpc" "main" {
   cidr_block = var.vpc_cidr_block
 
-  enable_dns_support = true  
-  enable_dns_hostnames = true  
-  
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
   tags = {
     Name = "main-vpc"
   }
@@ -19,7 +19,7 @@ resource "aws_internet_gateway" "main" {
 
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat-eip.id
-  subnet_id = var.public_subnet
+  subnet_id     = var.public_subnet
 
   tags = {
     Name = "main-nat"

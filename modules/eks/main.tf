@@ -10,7 +10,7 @@ resource "aws_eks_cluster" "default" {
     authentication_mode                         = "API_AND_CONFIG_MAP"
     bootstrap_cluster_creator_admin_permissions = true
   }
-  
+
   depends_on = [
     aws_iam_role_policy_attachment.default-AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.default-AmazonEKSVPCResourceController,
@@ -22,7 +22,7 @@ resource "aws_eks_cluster" "default" {
 resource "aws_eks_node_group" "default" {
   cluster_name    = var.cluster_name
   node_group_name = "paperple-node-group"
-  node_role_arn   = aws_iam_role.node-group-default.arn  
+  node_role_arn   = aws_iam_role.node-group-default.arn
   subnet_ids      = var.node_group_subnet_ids
   ami_type        = "AL2_x86_64"
 
