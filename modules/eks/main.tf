@@ -43,6 +43,27 @@ resource "aws_eks_node_group" "default" {
   ]
 }
 
+resource "aws_eks_addon" "coredns" {
+  cluster_name                = var.cluster_name
+  addon_name                  = "coredns"
+}
+
+resource "aws_eks_addon" "kube-proxy" {
+  cluster_name                = var.cluster_name
+  addon_name                  = "kube-proxy"
+}
+
+resource "aws_eks_addon" "vpc-cni" {
+  cluster_name                = var.cluster_name
+  addon_name                  = "vpc-cni"
+}
+
+resource "aws_eks_addon" "eks-pod-identity-agent" {
+  cluster_name                = var.cluster_name
+  addon_name                  = "eks-pod-identity-agent"
+}
+
+
 resource "aws_cloudwatch_log_group" "paperple-cluster-log-group" {
   name              = "/aws/eks/${var.cluster_name}/cluster"
   retention_in_days = 7
