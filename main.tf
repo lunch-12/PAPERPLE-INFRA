@@ -4,6 +4,8 @@ provider "aws" {
 
 module "vpc" {
   source    = "./modules/vpc"
+
+  public_subnet = module.subnet.public_subnet
 }
 
 module "subnet" {
@@ -31,15 +33,40 @@ module "ec2" {
   vpc_security_group_ids = [module.security_group.main]
 }
 
+module "eks" {
+  source                  = "./modules/eks"
+
+  vpc_id                          = module.vpc.vpc_id
+  cluster_subnet_ids              = module.subnet.eks_cluster_subnet
+  node_group_subnet_ids           = module.subnet.eks_node_group_subnet
+}
+
 resource "aws_route_table_association" "jenkins" {
   subnet_id      = module.subnet.jenkins_subnet
-  route_table_id = module.vpc.route_table
+  route_table_id = module.vpc.igw-table
 }
 
 resource "aws_route_table_association" "rds" {
   count          = length(module.subnet.db_subnet)
   subnet_id      = module.subnet.db_subnet[count.index]
-  route_table_id = module.vpc.route_table
+  route_table_id = module.vpc.igw-table
+}
+
+resource "aws_route_table_association" "public_subnet" {
+  subnet_id      = module.subnet.public_subnet
+  route_table_id = module.vpc.igw-table
+}
+
+resource "aws_route_table_association" "eks" {
+  count          = length(module.subnet.eks_cluster_subnet)
+  subnet_id      = module.subnet.eks_cluster_subnet[count.index]
+  route_table_id = module.vpc.igw-table
+}
+
+resource "aws_route_table_association" "eks-node-group" {
+  count          = length(module.subnet.eks_node_group_subnet)
+  subnet_id      = module.subnet.eks_node_group_subnet[count.index]
+  route_table_id = module.vpc.nat-table
 }
 
 resource "aws_eip" "current_ip" {

@@ -12,6 +12,12 @@ resource "aws_db_instance" "paperple" {
   multi_az                = false
   skip_final_snapshot     = true  
   publicly_accessible     = true
+  enabled_cloudwatch_logs_exports = [
+    "audit",
+    "error",
+    "general",
+    "slowquery"
+  ]
 
   lifecycle {
     prevent_destroy = true

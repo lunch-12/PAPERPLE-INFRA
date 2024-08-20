@@ -17,7 +17,16 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
-resource "aws_route_table" "main" {
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat-eip.id
+  subnet_id = var.public_subnet
+
+  tags = {
+    Name = "main-nat"
+  }
+}
+
+resource "aws_route_table" "igw-table" {
   vpc_id = aws_vpc.main.id
 
   route {
@@ -26,6 +35,25 @@ resource "aws_route_table" "main" {
   }
 
   tags = {
-    Name = "main-route-table"
+    Name = "main-igw-rtb"
+  }
+}
+
+resource "aws_route_table" "nat-table" {
+  vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.main.id
+  }
+
+  tags = {
+    Name = "main-nat-rtb"
+  }
+}
+
+resource "aws_eip" "nat-eip" {
+  lifecycle {
+    create_before_destroy = true
   }
 }

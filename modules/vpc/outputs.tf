@@ -6,6 +6,10 @@ output "internet_gateway" {
   value = aws_internet_gateway.main.id
 }
 
-output "route_table" {
-  value = aws_route_table.main.id
+output "igw-table" {
+  value = aws_route_table.igw-table.id
+}
+
+output "nat-table" {
+  value = aws_route_table.nat-table.id
 }
