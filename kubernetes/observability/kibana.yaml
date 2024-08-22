@@ -39,9 +39,13 @@ metadata:
   namespace: logging
 spec:
   ports:
-    - nodePort: 30561
-      port: 5601
-      protocol: TCP
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 5601
+    - protocol: TCP
+      name: https
+      port: 443
       targetPort: 5601
   selector:
     app: kibana
