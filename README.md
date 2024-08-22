@@ -40,6 +40,14 @@
   - namespace: default
   - 백엔드 파드 / AI 파드 통신
 
+- CI/CD
+
+  - 백엔드 / AI 레포에 Dockerfile, Jenkinsfile 작성
+  - 변경 사항 발생시 이미지 빌드/푸시 트리거
+  - https://github.com/lunch-12/PAPERPLE-CD에서 manifest 관리
+    - 이미지 태그 갱신되면 manifest 태그 수정
+    - ArgoCD 모니터링 및 AutoSync
+
 - EFK로 로그 수집
   - namespace: logging
   - ElasticSearch
