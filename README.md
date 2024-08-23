@@ -39,6 +39,8 @@
 
   - namespace: default
   - 백엔드 파드 / AI 파드 통신
+  - nginx ingress controller
+    - 백엔드 서비스 ingress로 노출
 
 - CI/CD
 
