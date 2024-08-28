@@ -102,6 +102,29 @@ resource "aws_iam_role" "node-group-default" {
   })
 }
 
+resource "aws_iam_policy" "ca-iam-policy" {
+  name        = "cluster-autoscaling"
+  description = "Cluster Autoscaling IAM policy"
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "autoscaling:DescribeAutoScalingGroups",
+          "autoscaling:DescribeAutoScalingInstances",
+          "autoscaling:DescribeLaunchConfigurations",
+          "autoscaling:DescribeTags",
+          "autoscaling:SetDesiredCapacity",
+          "autoscaling:TerminateInstanceInAutoScalingGroup",
+          "ec2:DescribeLaunchTemplateVersions"
+        ]
+        Resource = "*"
+        Effect   = "Allow"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "default-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.cluster-default.name

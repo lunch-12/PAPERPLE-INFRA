@@ -6,7 +6,7 @@ metadata:
   labels:
     app: backend
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: backend
@@ -17,15 +17,36 @@ spec:
     spec:
       containers:
         - name: backend
-          image: hnnynh/paperple-spring:v0.0.42
           resources:
             requests:
-              cpu: "2m"
-              memory: "250Mi"
+              cpu: 200m
+              memory: 250Mi
             limits:
-              cpu: "100m"
+              cpu: 500m
+          image: hnnynh/paperple-spring:v0.0.42
           ports:
             - containerPort: 8080
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend
+  namespace: default
+spec:
+  maxReplicas: 8
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend
 
 ---
 apiVersion: v1
@@ -58,7 +79,7 @@ metadata:
   labels:
     app: fastapi-ai
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: fastapi-ai
@@ -69,15 +90,38 @@ spec:
     spec:
       containers:
         - name: fastapi-ai
-          image: hnnynh/paperple-ai:v0.0.11
+          image: hnnynh/paperple-ai:v0.0.32
           resources:
             requests:
-              cpu: "2m"
-              memory: "50Mi"
+              cpu: 50m
+              memory: 50Mi
             limits:
-              cpu: "100m"
+              cpu: 300m
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: docker-secret
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: fastapi-ai
+  namespace: default
+spec:
+  maxReplicas: 6
+  metrics:
+    - resource:
+        name: cpu
+        target:
+          averageUtilization: 50
+          type: Utilization
+      type: Resource
+  minReplicas: 2
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fastapi-ai
 
 ---
 apiVersion: v1
