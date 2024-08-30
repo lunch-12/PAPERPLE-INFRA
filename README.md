@@ -29,7 +29,9 @@
      - 권한 부여한 역할 IAM
   6. EC2
      - CI 서버 인스턴스
-  7. IAM (분리 예정)
+  7. ECR
+     - 백엔드, AI 이미지 관리 프라이빗 리포지토리
+  8. IAM (분리 예정)
 
 - Ansible로 Jenkins 서버 구축 자동화
 
@@ -57,7 +59,7 @@
 - CI/CD
 
   - 백엔드 / AI 레포에 Dockerfile, Jenkinsfile 작성
-  - 변경 사항 발생시 Jenkins 이미지 빌드/푸시
+  - 변경 사항 발생시 Jenkins가 이미지 빌드/푸시
   - https://github.com/lunch-12/PAPERPLE-CD 에서 manifest 관리
     - 이미지 태그 갱신되면 manifest 태그 수정
     - ArgoCD 모니터링

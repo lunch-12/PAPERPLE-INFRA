@@ -23,9 +23,11 @@ spec:
               memory: 250Mi
             limits:
               cpu: 500m
-          image: hnnynh/paperple-spring:v0.0.42
+          image: 024848437933.dkr.ecr.ap-northeast-2.amazonaws.com/paperple-spring:v0.0.2
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: ecr-secret
 
 ---
 apiVersion: autoscaling/v2
@@ -90,7 +92,7 @@ spec:
     spec:
       containers:
         - name: fastapi-ai
-          image: hnnynh/paperple-ai:v0.0.32
+          image: 024848437933.dkr.ecr.ap-northeast-2.amazonaws.com/paperple-ai:v0.0.4
           resources:
             requests:
               cpu: 50m
@@ -100,7 +102,7 @@ spec:
           ports:
             - containerPort: 8080
       imagePullSecrets:
-        - name: docker-secret
+        - name: ecr-secret
 
 ---
 apiVersion: autoscaling/v2

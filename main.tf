@@ -37,6 +37,10 @@ module "eks" {
   node_group_subnet_ids = module.subnet.eks_node_group_subnet
 }
 
+module "ecr" {
+  source = "./modules/ecr"
+}
+
 resource "aws_route_table_association" "jenkins" {
   subnet_id      = module.subnet.jenkins_subnet
   route_table_id = module.vpc.igw-table

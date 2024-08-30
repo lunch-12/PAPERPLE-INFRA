@@ -3,14 +3,27 @@
 
     environment {
         REPO = 'lunch-12/PAPERPLE-BE'
-        IMAGE_NAME = 'hnnynh/paperple-spring'
-        DOCKER_CREDENTIALS_ID = 'dockerhub'
+        IMAGE_NAME = 'paperple-spring'
+        ECR_ACCESS = 'ECR_Access'
     }
     
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: "https://github.com/${REPO}.git"
+                script {
+                    git url: "git@github.com:${env.REPO}.git", branch: 'main', credentialsId: 'jenkins-ssh'
+                }
+            }
+        }
+
+        stage('Initialize Submodules') {
+            steps {
+                script {
+                    sh '''
+                        git submodule init
+                        git submodule update --remote --merge
+                    '''
+                }
             }
         }
         
@@ -32,22 +45,57 @@
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${IMAGE_NAME}:v${env.BUILD_NUMBER}")
+                    dockerImage = docker.build("${IMAGE_NAME}:v0.0.${env.BUILD_NUMBER}")
                 }
             }
         }
         
+                
+        stage('Run Container and Health Check') {
+            steps {
+                script {
+                    sh "docker run -d --name run-test -p 8000:8080 ${IMAGE_NAME}:v0.0.${env.BUILD_NUMBER}"
+                    sleep(20)
+                    
+                    def httpCode = sh(script: 'curl -s -o /dev/null -w %{http_code} http://localhost:8000/health', returnStdout: true).trim()
+                    
+                    if(httpCode != '200')
+                        error("Health Check Failure: ${httpCode}")
+                }
+                
+            }
+        }
+ 
+        stage('Test Env Cleanup') {
+            steps {
+                script {
+                    sh 'docker stop run-test'
+                    sh 'docker rm run-test'
+                }
+            }
+        }
+        
+
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                        dockerImage.push("v${env.BUILD_NUMBER}")
+                    docker.withRegistry("https://024848437933.dkr.ecr.ap-northeast-2.amazonaws.com", "ecr:ap-northeast-2:${env.ECR_ACCESS}") {
+                        docker.image("${env.IMAGE_NAME}:v0.0.${env.BUILD_NUMBER}").push()
                     }
                 }
             }
         }
-    }
+        
+        stage('Trigger CD Job') {
+            steps {
+                echo "IMAGE_TAG = v0.0.${env.BUILD_NUMBER}"
+                build job: 'paperple-be-cd', parameters: [string(name: 'IMAGE_TAG', value: "v0.0.${env.BUILD_NUMBER}")], 
+                    wait: false
+            }
+        }
     
+    }
+  
     post {
         success {
             slackSend (

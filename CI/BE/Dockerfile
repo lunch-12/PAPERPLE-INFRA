@@ -5,8 +5,8 @@ WORKDIR /app
 
 COPY gradlew build.gradle settings.gradle ./ 
 COPY gradle ./gradle
-
-COPY src ./src
+COPY config ./
+COPY . .
 
 RUN ./gradlew clean build
 
