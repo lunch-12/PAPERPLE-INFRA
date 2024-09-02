@@ -52,6 +52,13 @@
     dest: /etc/nginx/sites-enabled/jenkins.paperple.o-r.kr
     state: link
 
+- name: Update nginx.conf to include specific site
+  lineinfile:
+    path: /etc/nginx/nginx.conf
+    regexp: '^include /etc/nginx/sites-enabled/\*;'
+    line: "include /etc/nginx/sites-enabled/jenkins.paperple.o-r.kr;"
+    state: present
+
 - name: Test Nginx configuration
   command: nginx -t
   register: nginx_test

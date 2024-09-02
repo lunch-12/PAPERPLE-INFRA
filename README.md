@@ -36,7 +36,7 @@
 - Ansible로 Jenkins 서버 구축 자동화
 
   - 역할 관리
-  - 개선 사항: nginx 8080->80 포트 세팅까지 추가
+  - tls 인증서 발급 및 https 연결 자동화
 
 - EKS로 Kubernets 클러스터 구성
 
@@ -65,6 +65,7 @@
     - ArgoCD 모니터링
   - Slack 연동
     - Jenkins: CI (이미지 빌드, 실행 테스트), CD 트리거
+      - 애플리케이션 실행 헬스체크 단계 추가
     - ArgoCD: Sync, Health 알림
 
 - 리소스 결정 고려 사항
@@ -79,7 +80,7 @@
     - EKS 노드 그룹의 노드 2개 보장으로 최소한의 가용성 보장
     - 파드 2개로 RollingUpdate 무중단 보장
       - hpa: https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale/
-      - slo: 최소한의 가용성으로 설정
+      - slo (확인 필요)
   - 안정성
     - 수평적 확장 - hpa 적용
     - 수직적 확장 - cluster autoscaling
