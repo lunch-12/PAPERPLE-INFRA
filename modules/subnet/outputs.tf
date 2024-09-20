@@ -2,6 +2,10 @@ output "public_subnet" {
   value = aws_subnet.public_subnet.id
 }
 
+output "db_public_subnet" {
+  value = aws_subnet.db_public_subnet.id
+}
+
 output "jenkins_subnet" {
   value = aws_subnet.jenkins_subnet.id
 }

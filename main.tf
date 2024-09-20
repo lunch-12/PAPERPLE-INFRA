@@ -2,6 +2,7 @@ module "vpc" {
   source = "./modules/vpc"
 
   public_subnet = module.subnet.public_subnet
+  db_public_subnet = module.subnet.db_public_subnet
 }
 
 module "subnet" {
@@ -49,11 +50,16 @@ resource "aws_route_table_association" "jenkins" {
 resource "aws_route_table_association" "rds" {
   count          = length(module.subnet.db_subnet)
   subnet_id      = module.subnet.db_subnet[count.index]
-  route_table_id = module.vpc.igw-table
+  route_table_id = module.vpc.db-nat-table   
 }
 
 resource "aws_route_table_association" "public_subnet" {
   subnet_id      = module.subnet.public_subnet
+  route_table_id = module.vpc.igw-table
+}
+
+resource "aws_route_table_association" "db_public_subnet" {
+  subnet_id      = module.subnet.db_public_subnet
   route_table_id = module.vpc.igw-table
 }
 

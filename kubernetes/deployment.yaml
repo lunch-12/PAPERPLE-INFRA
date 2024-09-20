@@ -6,7 +6,12 @@ metadata:
   labels:
     app: backend
 spec:
-  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  replicas: 2
   selector:
     matchLabels:
       app: backend
@@ -23,7 +28,7 @@ spec:
               memory: 250Mi
             limits:
               cpu: 500m
-          image: 024848437933.dkr.ecr.ap-northeast-2.amazonaws.com/paperple-spring:v0.0.2
+          image: 024848437933.dkr.ecr.ap-northeast-2.amazonaws.com/paperple-spring:v0.0.60
           ports:
             - containerPort: 8080
       imagePullSecrets:
@@ -36,7 +41,7 @@ metadata:
   name: backend
   namespace: default
 spec:
-  maxReplicas: 8
+  maxReplicas: 4
   metrics:
     - resource:
         name: cpu
@@ -81,7 +86,12 @@ metadata:
   labels:
     app: fastapi-ai
 spec:
-  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  replicas: 2
   selector:
     matchLabels:
       app: fastapi-ai
@@ -92,13 +102,13 @@ spec:
     spec:
       containers:
         - name: fastapi-ai
-          image: 024848437933.dkr.ecr.ap-northeast-2.amazonaws.com/paperple-ai:v0.0.4
+          image: 024848437933.dkr.ecr.ap-northeast-2.amazonaws.com/paperple-ai:v0.0.29
           resources:
             requests:
-              cpu: 50m
-              memory: 50Mi
+              cpu: 200m
+              memory: 100Mi
             limits:
-              cpu: 300m
+              cpu: 500m
           ports:
             - containerPort: 8080
       imagePullSecrets:
@@ -111,7 +121,7 @@ metadata:
   name: fastapi-ai
   namespace: default
 spec:
-  maxReplicas: 6
+  maxReplicas: 4
   metrics:
     - resource:
         name: cpu

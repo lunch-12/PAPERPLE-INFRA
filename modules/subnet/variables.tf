@@ -3,6 +3,11 @@ variable "public_subnet" {
   description = "Public Subnet - NAT Gateway Subnet"
 }
 
+variable "db_public_subnet" {
+  default     = "192.169.20.0/24"
+  description = "Public Subnet - NAT Gateway Subnet"
+}
+
 variable "jenkins_subnet" {
   default     = "192.169.1.0/24"
   description = "Jenkins Server Instance Subnet"

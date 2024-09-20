@@ -51,6 +51,7 @@
                     sh "docker run -d --name run-test -p 8000:8000 ${IMAGE_NAME}:v0.0.${env.BUILD_NUMBER}"
                 }
             }
+        }
        
         stage('Call Health Check API') {
             steps {
@@ -110,8 +111,8 @@
                     wait: false
             }
         }
-
     }
+    
     post {
         success {
             slackSend (

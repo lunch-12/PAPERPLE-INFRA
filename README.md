@@ -1,5 +1,48 @@
 # PAPERPLE-Infra
 
+서비스 소개
+담당한 작업들
+세부사항
+
+- Kubernetes
+- Terraform
+- Jenkins
+- ArgoCD
+  고민 및 개선 사항
+  블로그 아티클
+
+## Paperple
+
+서비스 소개
+
+## Role
+
+담당한 작업들
+
+## Tech Stack
+
+| **CSP**                                                                                                        | **Infra**                                                                                                        | **Deployment**                                                                                                 | **CI/CD**                                                                                                                                                                                                     | **Image**                                                                                              |
+| -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white"> | <img src="https://img.shields.io/badge/Terraform-844FBA?style=for-the-badge&logo=terraform&logoColor=white"></a> | <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white"> | <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"> <img src="https://img.shields.io/badge/ArgoCD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white"> | <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> |
+
+## Details
+
+세부사항
+
+## Dive & To Do
+
+고민 및 개선 사항
+
+## Articles
+
+- [[CI/CD] GitOps 환경 구축하기(1) GitOps, Kubernetes](https://velog.io/@hnnynh/CICD-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-GitOps-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-GitOps-Kubernetes)
+- [[CI/CD] GitOps 환경 구축하기(2) GitHub](https://velog.io/@hnnynh/CICD-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-GitOps-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-GitHub)
+- [[CI/CD] GitOps 환경 구축하기(3) Jenkins](https://velog.io/@hnnynh/CICD-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-GitOps-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-Jenkins)
+- [[CI/CD] GitOps 환경 구축하기(4) ArgoCD, Kubernetes](https://velog.io/@hnnynh/CICD-%EC%BF%A0%EB%B2%84%EB%84%A4%ED%8B%B0%EC%8A%A4-GitOps-%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0-ArgoCD)
+- [[K8s] HPA 설정 트러블슈팅하기](https://velog.io/@hnnynh/hpa-%EC%84%A4%EC%A0%95-%ED%8A%B8%EB%9F%AC%EB%B8%94%EC%8A%88%ED%8C%85%ED%95%98%EA%B8%B0)
+- [[K8s] nginx ingress controller에서 https 적용하기](https://velog.io/@hnnynh/K8s-nginx-ingress-controller%EC%97%90%EC%84%9C-https-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0)
+- []()
+  블로그 아티클
 - Terraform으로 AWS 인프라 구축
 
   - 모듈 분리
@@ -12,7 +55,7 @@
   2. 서브넷
      - NAT 게이트웨이 퍼블릭 서브넷
      - CI 서버 인스턴스 퍼블릭 서브넷
-     - RDS 퍼블릭 서브넷 -> 프라이빗 이동 예정
+     - RDS 프라이빗 서브넷
      - EKS 클러스터 퍼블릭 서브넷
      - EKS 노드그룹 프라이빗 서브넷
   3. 보안 그룹
@@ -31,7 +74,6 @@
      - CI 서버 인스턴스
   7. ECR
      - 백엔드, AI 이미지 관리 프라이빗 리포지토리
-  8. IAM (분리 예정)
 
 - Ansible로 Jenkins 서버 구축 자동화
 
@@ -48,6 +90,7 @@
     - 백엔드 파드 / AI 파드 통신
     - nginx ingress controller
       - 백엔드 서비스 ingress로 노출
+      - 쿠키, CORS 설정으로 OAuth 로그인 연동 성공
 
   - EFK로 로그 수집
     - namespace: logging
@@ -78,7 +121,7 @@
   - 개발 과정
     - 마스터노드 1개로 리소스 사용 최소화
     - EKS 노드 그룹의 노드 2개 보장으로 최소한의 가용성 보장
-    - 파드 2개로 RollingUpdate 무중단 보장
+    - 파드 2개로 RollingUpdate 무중단 보장 -> 컨테이너 입장에서의 무중단 배포...
       - hpa: https://kubernetes.io/ko/docs/tasks/run-application/horizontal-pod-autoscale/
       - slo (확인 필요)
   - 안정성

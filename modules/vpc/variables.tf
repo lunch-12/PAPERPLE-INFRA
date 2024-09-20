@@ -7,3 +7,8 @@ variable "public_subnet" {
   type        = string
   description = "Public Subnet - NAT Gateway"
 }
+
+variable "db_public_subnet" {
+  type        = string
+  description = "DB Public Subnet - NAT Gateway"
+}

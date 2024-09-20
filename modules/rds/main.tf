@@ -11,7 +11,7 @@ resource "aws_db_instance" "paperple" {
   password               = var.db_password
   multi_az               = false
   skip_final_snapshot    = true
-  publicly_accessible    = true
+  publicly_accessible    = false
   enabled_cloudwatch_logs_exports = [
     "audit",
     "error",
@@ -19,9 +19,9 @@ resource "aws_db_instance" "paperple" {
     "slowquery"
   ]
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #  prevent_destroy = true
+  # }
 
   tags = {
     Name = "paperple DB instance"

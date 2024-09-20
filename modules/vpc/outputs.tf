@@ -13,3 +13,7 @@ output "igw-table" {
 output "nat-table" {
   value = aws_route_table.nat-table.id
 }
+
+output "db-nat-table" {
+  value = aws_route_table.db-nat-table.id
+}
