@@ -2,7 +2,7 @@
 
 - [Paperple](#paperple)
 - [Tech Stack](#tech-stack)
-- [Roles and Responsibilities](#roles-and-responsibilities)
+- [Roles & Responsibilities](#roles--responsibilities)
 - [CICD Flow](#cicd-flow)
 - [Task Details](#task-details)
 - [Done & To-Dos](#done--to-dos)
@@ -24,8 +24,8 @@ Paperple은 `Paper + People`로 Paper를 통한 People의 연결을 의미합니
 | -------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | <img src="https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonwebservices&logoColor=white"> | <img src="https://img.shields.io/badge/Terraform-844FBA?style=for-the-badge&logo=terraform&logoColor=white"></a> | <img src="https://img.shields.io/badge/kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white"> | <img src="https://img.shields.io/badge/Jenkins-D24939?style=for-the-badge&logo=jenkins&logoColor=white"> <img src="https://img.shields.io/badge/ArgoCD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white"> | <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white"> |
 
-## Roles and Responsibilities
-
+## Roles & Responsibilities
+![image](https://user-content.gitlab-static.net/35c6c5f47b16e9a3292cfed46f4a51ac07244f32/68747470733a2f2f696d616765732e7765736572762e6e6c2f3f75726c3d68747470733a2f2f617661746172732e67697468756275736572636f6e74656e742e636f6d2f686e6e796e683f763d342532323f763d3426683d32353026773d323530266669743d636f766572266d61736b3d636972636c65266d61786167653d3764)
 ### Cloud Team | 한윤호 | hnnynh
 
 [GitHub](https://github.com/hnnynh) | [Blog](https://velog.io/@hnnynh/posts) | [LinkedIn](https://www.linkedin.com/in/%EC%9C%A4%ED%98%B8-%ED%95%9C-759471291/)
